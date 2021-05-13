@@ -1,0 +1,29 @@
+.active {
+  font-weight: bold;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+}
+
+.hidden {
+  display: none;
+}
+
+.nav {
+  background-color: black;
+  height: 4em;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.nav .nav-link {
+  color: white;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2em;
+}

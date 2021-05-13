@@ -1,10 +1,77 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset=utf-8>
-  <title>Yodlr Admin Page</title>
-</head>
-<body>
-  List user data here
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Yodlr Admin Page</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+      crossorigin="anonymous"
+    />
+    <link href="css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <a class="nav-link" href="/index.html">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/signup.html">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/admin.html">Admin</a>
+      </li>
+    </ul>
+    <div class="container">
+      <h1>Yodlr Administration Page</h1>
+      <table class="table" id="data_table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Name</th>
+            <th>State</th>
+          </tr>
+        </thead>
+        <tbody class="hidden"></tbody>
+      </table>
+      <div class="loading" id="users_loading_indicator">
+        <img
+          src="https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif"
+          alt="loading"
+        />
+      </div>
+    </div>
+
+    <script>
+      window.onload = () => {
+        const tbody = document.querySelector("#data_table tbody");
+        const loader = document.querySelector("#users_loading_indicator");
+
+        fetch("/users")
+          .then((res) => res.json())
+          .then((data) => {
+            data.forEach((user) => {
+              const row = document.createElement("tr");
+              row.append(
+                ...[
+                  user.id,
+                  user.email,
+                  `${user.firstName} ${user.lastName}`,
+                  user.state,
+                ].map((item) => {
+                  const td = document.createElement("td");
+                  td.append(item);
+                  return td;
+                })
+              );
+              tbody.append(row);
+            });
+            tbody.classList.remove("hidden");
+            loader.classList.add("hidden");
+          });
+      };
+    </script>
+  </body>
 </html>
